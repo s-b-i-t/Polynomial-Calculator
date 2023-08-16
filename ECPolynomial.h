@@ -5,12 +5,17 @@
     #include <cmath>
     // *****************************************************************
     // Represent a polynomial of a single variable, x, and
+<<<<<<< HEAD
     // support common operations on polynomial: add, scaling, multiple
     // and (long) division, etc
+=======
+    // support common operations on polynomial: add, scaling, multiple, and division
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
 
     class ECPolynomial
     {
     public:
+<<<<<<< HEAD
         // Feel free to add more interface or implementation functions
         
         // Construct a polynomial with coefficients, where the first position is the constant term and [i] is the coefficient of x^i
@@ -18,6 +23,8 @@
         // We assume listCoeffsIn is not empty
         // Note: the last term in listCoeffsIn should not be zero (unless its length is 1). For example, if given [1, 3, 0], 
         //we should simply it to [1,3]. Since coefficient is a double, we consider a value is practically zero if its absolute value is sufficiently small (say less than 1e^(-10)
+=======
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
             
         ECPolynomial() : listCoeffsIn({0}) {}
 
@@ -66,7 +73,11 @@
         double  GetCoeff(int index) const; 
         
         // void SetCoeff(int index, double value) ;
+<<<<<<< HEAD
         // This is for testing only. It can be useful to dump out the polynomial (in some format) to the terminal for debugging
+=======
+        // This is for testing only. 
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
         void Dump() const;
 
         void SetCoeffAt(int index,double value);

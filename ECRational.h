@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 //  ECRational.h
 //  
@@ -9,6 +10,12 @@
 #define ECRational_h
 
 
+=======
+//  ECRational.h
+#ifndef ECRational_h
+#define ECRational_h
+
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
 // *****************************************************************
 // Generic rational of two quantities (e.g. integers, floating point, complex number, or polynomila)
 // Assume the quantity class T supports (i) default constructor and copy constructor, (ii) assignment operator, and (iii) arithmatic operators: +, -, * and /
@@ -17,7 +24,10 @@ template <class T>
 class ECRational
 {
 public:
+<<<<<<< HEAD
     // YW: change the following code if needed...
+=======
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
     ECRational() {}
     
     ECRational(const T &numeratorIn, const T &denominatorIn) : numerator(numeratorIn) , denominator(denominatorIn) {}
@@ -28,7 +38,10 @@ public:
     // assignment operator
     ECRational<T>& operator=(const ECRational &rhs); 
     
+<<<<<<< HEAD
     // operators: define +, -, *, / operators yourself
+=======
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
     ECRational<T> operator+(const ECRational &rhs); 
     
     ECRational<T> operator-(const ECRational &rhs); 
@@ -47,6 +60,9 @@ private:
     T denominator;
 };
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
 #endif /* ECRational_h */

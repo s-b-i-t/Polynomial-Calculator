@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 //  ECPolynomial.cpp
 //
@@ -5,6 +6,9 @@
 //  Created by Yufeng Wu on 9/17/22.
 //
 
+=======
+//  ECPolynomial.cpp
+>>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
 #include "ECPolynomial.h"
 #include <iostream>
 #include <vector>
