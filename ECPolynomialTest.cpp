@@ -1,11 +1,7 @@
 #include <iostream>
 using namespace std;
-
 #include "ECPolynomial.h"
-<<<<<<< HEAD
 
-=======
->>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
 int main()
 {
   // 
@@ -38,12 +34,6 @@ int main()
   poly5.Dump();
   cout << "remainder: ";
   poly6.Dump();
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
-
   
   std::vector<double> first = {1, 0 , 1}; 
   std::vector<double> second = {-1,1};
@@ -52,8 +42,6 @@ int main()
   ECPolynomial Two(second);
   ECPolynomial Res = Two * One;
   Res.Dump();
-
-
 
 }
 

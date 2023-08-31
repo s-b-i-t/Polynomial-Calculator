@@ -1,20 +1,13 @@
-<<<<<<< HEAD
-//
 //  ECPolynomial.cpp
-//
-//
-//  Created by Yufeng Wu on 9/17/22.
-//
-
-=======
-//  ECPolynomial.cpp
->>>>>>> 5d456af5ad28e948d4ea00556da10a34cb874093
 #include "ECPolynomial.h"
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <algorithm>
 #include <iterator>
+#include <string>
+#include <cstring>
+
 using namespace std;
 // ECPolynomial ::  ECPolynomial(const std::vector<double> &listCoeffsIn){}
 
@@ -193,31 +186,24 @@ ECPolynomial ECPolynomial ::operator=(const ECPolynomial &rhs) const
 }
 
 // dump function
-void ECPolynomial ::Dump() const
+char* ECPolynomial::Dump() const
 {
+    std::string result;
 
     for (int i = 0; i < listCoeffsIn.size(); ++i)
     {
         if (i == 0)
         {
-            cout << listCoeffsIn[i];
+            result += std::to_string(listCoeffsIn[i]);
         }
         else
         {
-            cout << listCoeffsIn[i] << "x" << "^" << i;
+            result += " + " + std::to_string(listCoeffsIn[i]) + "x^" + std::to_string(i);
         }
-        if (i != listCoeffsIn.size() - 1)
-            cout << " + ";
     }
-    cout << endl;
-}
 
-// void ECPolynomial::Dump() const
-// {
-//     cout << "Deg: " << GetDegree() << ":  ";
-//     for (int i = 0; i < listCoeffsIn.size(); i++)
-//     {
-//         cout << listCoeffsIn[i] << " ";
-//     }
-//     cout << endl;
-// }
+    char* cstr = new char[result.length() + 1];
+    std::strcpy(cstr, result.c_str());
+
+    return cstr;
+}
