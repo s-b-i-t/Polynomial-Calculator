@@ -3,6 +3,7 @@
 
     #include <vector>
     #include <cmath>
+    #include <iostream>
     // *****************************************************************
     // Represent a polynomial of a single variable, x, and
     // support common operations on polynomial: add, scaling, multiple, and division
@@ -32,9 +33,9 @@
         // Get the degree. Example: if polynomial=1+x+3x^3, degree=3
         int GetDegree() const;
         
-        // Scale by a constant and return the resulting polynomial. For example, if polynomial is 1+3x, and
+        // Scale by a constant and return resulting NEW polynomial. For example, if polynomial is 1+3x, and
         // factor = 2, the result is 2+6x
-        ECPolynomial Scale(double factor);
+        ECPolynomial Scale(double factor) const;
         
         // Add a polynomial to the current polynomial (and return the result). Example: (1+2x) + (2x+3x^2) = 1+4x+3x^2
         ECPolynomial operator+(const ECPolynomial &rhs) const;
@@ -59,7 +60,11 @@
         
         // void SetCoeff(int index, double value) ;
         // This is for testing only. 
-        char* Dump() const;
+        char* Windows_Output() const;
+
+        void Dump() const;
+
+
 
         void SetCoeffAt(int index,double value);
     private:

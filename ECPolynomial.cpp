@@ -66,7 +66,7 @@ int ECPolynomial ::GetDegree() const
 }
 
 // scale function
-ECPolynomial ECPolynomial ::Scale(double factor)
+ECPolynomial ECPolynomial ::Scale(double factor) const 
 {
     vector<double> scaledCoeffs = listCoeffsIn;
     for (auto &x : scaledCoeffs)
@@ -186,24 +186,53 @@ ECPolynomial ECPolynomial ::operator=(const ECPolynomial &rhs) const
 }
 
 // dump function
-char* ECPolynomial::Dump() const
+// char* ECPolynomial::Dump() const
+// {
+//     std::string result;
+
+//     for (int i = 0; i < listCoeffsIn.size(); ++i)
+//     {
+//         if (i == 0)
+//         {
+//             result += std::to_string(listCoeffsIn[i]);
+//         }
+//         else
+//         {
+//             result += " + " + std::to_string(listCoeffsIn[i]) + "x^" + std::to_string(i);
+//         }
+//     }
+
+//     char* cstr = new char[result.length() + 1];
+//     std::strcpy(cstr, result.c_str());
+
+//     return cstr;
+// }
+
+// char* ECPolynomial::Windows_Output() const {
+//     std::string result = "Polynomial: ";
+//     for (size_t i = 0; i < listCoeffsIn.size(); ++i) {
+//         result += std::to_string(listCoeffsIn[i]) + "x^" + std::to_string(i) + " ";
+//     }
+//     char* cstr = new char[result.length() + 1];
+//     std::strcpy(cstr, result.c_str());
+//     return cstr;
+// }
+
+void ECPolynomial ::Dump() const
 {
-    std::string result;
 
     for (int i = 0; i < listCoeffsIn.size(); ++i)
     {
         if (i == 0)
         {
-            result += std::to_string(listCoeffsIn[i]);
+            cout << listCoeffsIn[i];
         }
         else
         {
-            result += " + " + std::to_string(listCoeffsIn[i]) + "x^" + std::to_string(i);
+            cout << listCoeffsIn[i] << "x" << "^" << i;
         }
+        if (i != listCoeffsIn.size() - 1)
+            cout << " + ";
     }
-
-    char* cstr = new char[result.length() + 1];
-    std::strcpy(cstr, result.c_str());
-
-    return cstr;
+    cout << endl;
 }
