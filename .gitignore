@@ -1,5 +1,4 @@
-.vscode/
-cpp_code/linuxmake.txt
-cpp_code/windowparams.md
 extra_polynomials.cpp
-.gitignore
+.vscode/
+cpp_code/windowsparams.md
+cpp_code/ec
