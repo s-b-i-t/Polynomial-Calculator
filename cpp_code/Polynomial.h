@@ -69,8 +69,6 @@
         bool operator!=(const Polynomial &rhs) const;
 
 
-
-
         // Get the degree. Example: if polynomial=1+x+3x^3, degree=3
         int GetDegree() const;
 

@@ -96,18 +96,40 @@ void testPolynomialRemainder() {
 }
 
 void testRational() {
-    Rational<int> r1(2);    // 1/1
-    Rational<int> r2(1);    // 2/1
-    Rational<int> r3;       // 0/1
+    Rational<int> r1(5);    
+    Rational<int> r2(2);    
+    Rational<int> r3;       
 
-    r3 = r1 % r2;
-    std::cout << r3.GetVal().GetCoeff(0) << std::endl;
+    r3 = r1 + r2; // 5 + 2 -> 7
+    assert(r3.GetValue() == 7);
+
     Rational<Polynomial> r4(poly13);
     Rational<Polynomial> r5(poly7);
-    Rational<Polynomial> r6(5);
-    
-    r6 = r4 % r5;
-    // std::cout << r6.GetNumerator().GetCoeff(0) << std::endl;
+    Rational<Polynomial> r6;
+    r6 = r4 % r5; // (1 + 5x^2) + (3 + 2x^2) -> 4 + 7x^2
+    assert(r6.GetValue().GetCoeff(0) == 7.75 && r6.GetValue().GetCoeff(1) == 2);
+
+    Rational<double> r7(5.0);
+    Rational<double> r8;
+    r8 = r7 / r2;
+    std::cout << r8.GetValue() << std::endl;
+
+    Rational<Polynomial> r9(poly6);
+    Rational<int> r10(2);
+
+    Rational<Polynomial> r11;
+
+    // r11 = r9 * r10; // 3x + 2 -> 2 + 3x
+
+    // std::cout << r11.GetValue().GetCoeff(0) << " " << r11.GetValue().GetCoeff(1) << r11.GetValue().GetCoeff(2) << std::endl;
+
+
+    Rational<Polynomial> r12(poly12); // 5 + 6x + 0x^2 + 3x^3
+    Rational<int> r13(3); // 3
+    Rational<Polynomial> result;
+    result = r12 * r13; // 15 + 18x + 0x^2 + 9x^3
+
+    std::cout << result.GetValue().GetCoeff(0) << " " << result.GetValue().GetCoeff(1) << " " << result.GetValue().GetCoeff(2) << " " << result.GetValue().GetCoeff(3) << std::endl;
 
 
 }

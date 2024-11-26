@@ -10,14 +10,32 @@ template class Rational<float>;
 template class Rational<double>;
 template class Rational<Polynomial>;
 
+template Rational<decltype(double() + int())> Rational<double>::operator+<int>(const Rational<int>& rhs) const;
+template Rational<decltype(double() - int())> Rational<double>::operator-<int>(const Rational<int>& rhs) const;
+template Rational<decltype(double() * int())> Rational<double>::operator*<int>(const Rational<int>& rhs) const;
+template Rational<decltype(double() / int())> Rational<double>::operator/<int>(const Rational<int>& rhs) const;
+
+// Instantiations for Rational<Polynomial> with int
+template Rational<decltype(Polynomial() + int())> Rational<Polynomial>::operator+<int>(const Rational<int>& rhs) const;
+template Rational<decltype(Polynomial() - int())> Rational<Polynomial>::operator-<int>(const Rational<int>& rhs) const;
+template Rational<decltype(Polynomial() * int())> Rational<Polynomial>::operator*<int>(const Rational<int>& rhs) const;
+template Rational<decltype(Polynomial() / int())> Rational<Polynomial>::operator/<int>(const Rational<int>& rhs) const;
+
+// Instantiations for Rational<Polynomial> with double
+template Rational<decltype(Polynomial() + double())> Rational<Polynomial>::operator+<double>(const Rational<double>& rhs) const;
+template Rational<decltype(Polynomial() - double())> Rational<Polynomial>::operator-<double>(const Rational<double>& rhs) const;
+template Rational<decltype(Polynomial() * double())> Rational<Polynomial>::operator*<double>(const Rational<double>& rhs) const;
+template Rational<decltype(Polynomial() / double())> Rational<Polynomial>::operator/<double>(const Rational<double>& rhs) const;
+
+
 
 
 template <class T>
 Rational<T> &Rational<T>::operator=(const Rational &rhs)
 {
 
-    numerator = rhs.numerator;
-    denominator = rhs.denominator;
+
+    value = rhs.value;
     return *this;
 }
 
@@ -25,47 +43,40 @@ template <class T>
 Rational<T> Rational<T>::operator+(const Rational &rhs)
 {
     
-    T newNumerator;
-    T newDenominator;
+    T newValue;
     
-    newNumerator = (this->GetNumerator() * rhs.GetDenominator()) + (rhs.GetNumerator() * this->GetDenominator());
-    newDenominator = this->GetDenominator() * rhs.GetDenominator();
-    
-    Rational<T> Output(newNumerator, newDenominator);
+    newValue = this->GetValue() + rhs.GetValue();
+    Rational<T> Output(newValue);
     return Output;
 }
 
 template <class T>
 Rational<T> Rational<T>::operator-(const Rational &rhs)
 {
-    T newNumerator;
-    T newDenominator;
-
-    newNumerator = (this->GetNumerator() * rhs.GetDenominator()) - (rhs.GetNumerator() * this->GetDenominator());
-    newDenominator = this->GetDenominator() * rhs.GetDenominator();
-
-    Rational<T> Output(newNumerator, newDenominator);
+    T newValue;
+    
+    newValue = this->GetValue() - rhs.GetValue();
+    Rational<T> Output(newValue);
     return Output;
 }
 
 template <class T>
 Rational<T> Rational<T>::operator*(const Rational &rhs)
 {
-    T newNumerator;
-    T newDenominator;
-    newNumerator = this->GetNumerator() * rhs.GetNumerator() ;
-    newDenominator = this->GetDenominator() * rhs.GetDenominator();
+    T newValue;
     
-    Rational<T> Output(newNumerator, newDenominator);
+    newValue = this->GetValue() * rhs.GetValue();
+    Rational<T> Output(newValue);
     return Output;
 }
 
 template <class T>
 Rational<T> Rational<T>::operator/(const Rational &rhs)
 {
-    T newNumerator = this->GetNumerator() * rhs.GetDenominator();
-    T newDenominator = this->GetDenominator() * rhs.GetNumerator();
-    Rational<T> Output(newNumerator, newDenominator);
+    T newValue;
+    
+    newValue = this->GetValue() / rhs.GetValue();
+    Rational<T> Output(newValue);
     return Output;
 }
 
@@ -73,13 +84,51 @@ Rational<T> Rational<T>::operator/(const Rational &rhs)
 // % operator for Rational<int>
 Rational<int> operator%(const Rational<int> &lhs, const Rational<int> &rhs)
 {
-    int newNumerator = lhs.GetNumerator() % rhs.GetNumerator();
-    return Rational<int>(newNumerator, lhs.GetDenominator());
+    int newValue = lhs.GetValue() % rhs.GetValue();
+    return Rational<int>(newValue);
 }
 
 // % operator for Rational<Polynomial>
 Rational<Polynomial> operator%(const Rational<Polynomial> &lhs, const Rational<Polynomial> &rhs)
 {
-    Polynomial newNumerator = lhs.GetNumerator() % rhs.GetNumerator();
-    return Rational<Polynomial>(newNumerator, lhs.GetDenominator());
+    Polynomial newValue = lhs.GetValue() % rhs.GetValue();
+    return Rational<Polynomial>(newValue);
+}
+
+
+
+
+
+// intertype computation
+
+template <class T>
+template <typename U>
+Rational<decltype(T() + U())> Rational<T>::operator+(const Rational<U>& rhs) const {
+    using ResultType = decltype(T() + U());
+    ResultType newValue = this->GetValue() + rhs.GetValue();
+    return Rational<ResultType>(newValue);
+}
+
+template <class T>
+template <typename U>
+Rational<decltype(T() - U())> Rational<T>::operator-(const Rational<U>& rhs) const {
+    using ResultType = decltype(T() - U());
+    ResultType newValue = this->GetValue() - rhs.GetValue();
+    return Rational<ResultType>(newValue);
+}
+
+template <class T>
+template <typename U>
+Rational<decltype(T() * U())> Rational<T>::operator*(const Rational<U>& rhs) const {
+    using ResultType = decltype(T() * U());
+    ResultType newValue = this->GetValue() * rhs.GetValue();
+    return Rational<ResultType>(newValue);
+}
+
+template <class T>
+template <typename U>
+Rational<decltype(T() / U())> Rational<T>::operator/(const Rational<U>& rhs) const {
+    using ResultType = decltype(T() / U());
+    ResultType newValue = this->GetValue() / rhs.GetValue();
+    return Rational<ResultType>(newValue);
 }
