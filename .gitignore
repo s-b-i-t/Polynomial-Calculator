@@ -2,3 +2,4 @@
 cpp_code/linuxmake.txt
 cpp_code/windowparams.md
 extra_polynomials.cpp
+.gitignore
