@@ -2,7 +2,7 @@
 #include <cassert>
 #include <vector>
 #include "Polynomial.h"
-#include "PolynomialDefinitions.h"
+#include "Definitions.h"
 #include "Rational.h"
 
 void testIntegerAddition() {
@@ -45,13 +45,23 @@ void testPolynomialAddition() {
     result = poly1 + poly10; // 0 + (12 + 32x + 4x^2) -> {12, 32x, 4x^2}
     assert(result.GetValue().GetCoeff(0) == 12 && result.GetValue().GetCoeff(1) == 32 && result.GetValue().GetCoeff(2) == 4);
 
-
-
 }
 
 
 void testInterTypeAddition(){
-    ;
+    Rational<double> result;
+
+    result = int1 + double1; // 1 + 1.0 -> 2.0
+    assert(result.GetValue() == 2.0);
+
+    result = int1 + double1point5; // 1 + 1.5 -> 2.5
+    assert(result.GetValue() == 2.5);
+
+    result = int2 + double2; // 2 + 2.0 -> 4.0
+    assert(result.GetValue() == 4.0)
+
+
+    
 }
 
 void testIntegerSubtraction() {
@@ -304,24 +314,37 @@ int main() {
     testPolynomialAddition();
     testInterTypeAddition();
 
+    std::cout << "Addition passed" << std::endl;
+    
+
     testIntegerSubtraction();
     testDoubleSubtraction();
     testPolynomialSubtraction();
     testInterTypeSubtraction();
+
+    std::cout << "Subtraction passed" << std::endl;
 
     testIntegerMultiplication();
     testDoubleMultiplication();
     testPolynomialMultiplication();
     testInterTypeMultiplication();
 
+    std::cout << "Multiplication passed" << std::endl;
+
     testIntegerDivision();
     testDoubleDivision();
     testPolynomialDivision();
     testInterTypeDivision();
 
+    std::cout << "Division passed" << std::endl;
+
     testIntegerRemainder();
     testPolynomialRemainder();
     testInterTypeRemainder();
+
+    std::cout << "Remainder passed" << std::endl;
+
+
 
      std::cout << "All tests passed" << std::endl;
     return 0;
