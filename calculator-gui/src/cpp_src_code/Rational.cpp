@@ -69,17 +69,3 @@ Rational<T> Rational<T>::operator/(const Rational &rhs)
     return Output;
 }
 
-
-// % operator for Rational<int>
-Rational<int> operator%(const Rational<int> &lhs, const Rational<int> &rhs)
-{
-    int newNumerator = lhs.GetNumerator() % rhs.GetNumerator();
-    return Rational<int>(newNumerator, lhs.GetDenominator());
-}
-
-// % operator for Rational<Polynomial>
-Rational<Polynomial> operator%(const Rational<Polynomial> &lhs, const Rational<Polynomial> &rhs)
-{
-    Polynomial newNumerator = lhs.GetNumerator() % rhs.GetNumerator();
-    return Rational<Polynomial>(newNumerator, lhs.GetDenominator());
-}

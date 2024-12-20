@@ -4,307 +4,300 @@
 #include "Polynomial.h"
 #include "Definitions.h"
 #include "Rational.h"
+#include "Complex.h"
 
-void testIntegerAddition() {
-    Rational<int> result; 
+
+void testIntegerAddition(){
+
+    // Rational<int> myint(1);
+    Rational<Polynomial> int1(Polynomial({1}));
     
-    result = int1 + int2; // 1 + 2 -> 3
-    assert(result.GetValue() == 3);
+    Rational<Polynomial> int2(Polynomial({3}));
+    Rational<Polynomial> result = int1 + int2;
 
-    result = int3 + int4; // 3 + 4 -> 7
-    assert(result.GetValue() == 7);
+     result.GetNumerator().Dump() ;
+     result.GetDenominator().Dump() ;
+    
+    
+    
 }
 
 void testDoubleAddition(){
-    Rational<double> result;
+    Rational<Polynomial> double1(Polynomial({2.5}));
+    Rational<Polynomial> double2(Polynomial({3.5}));
+    Rational<Polynomial> result = double1 + double2;
 
-    result = double1 + double2; // 1.0 + 2.0 -> 3.0
-    assert(result.GetValue() == 3.0);
-
-    result = double1 + double1point5; // 1.0 + 1.5 -> 2.5
-    assert(result.GetValue() == 2.5);
-
-    result = double2 + double3; // 2.0 + 3.0 -> 5.0
-    assert(result.GetValue() == 5.0);
-}
-
-void testPolynomialAddition() {
-    Rational<Polynomial> result;
-
-    result = poly1 + poly2; // 0 + 1 -> {1}
-    assert(result.GetValue().GetCoeff(0) == 1);
-    result = poly3 + poly4; // (3x) + (7x) -> {0, 10}
-    assert(result.GetValue().GetCoeff(0) == 0 && result.GetValue().GetCoeff(1) == 10);
-
-    result = poly5 + poly6; // (2 + 4x) + (1 + 5x^2) -> {3, 4, 5}
-    assert(result.GetValue().GetCoeff(0) == 3 && result.GetValue().GetCoeff(1) == 4 && result.GetValue().GetCoeff(2) == 5);
-
-    result = poly7 + poly8; // (3 + 2x^2) + (1 + 2x + 3x^2) -> {4, 2x, 5x^2}
-    assert(result.GetValue().GetCoeff(0) == 4 && result.GetValue().GetCoeff(1) == 2 && result.GetValue().GetCoeff(2) == 5);
-
-    result = poly1 + poly10; // 0 + (12 + 32x + 4x^2) -> {12, 32x, 4x^2}
-    assert(result.GetValue().GetCoeff(0) == 12 && result.GetValue().GetCoeff(1) == 32 && result.GetValue().GetCoeff(2) == 4);
+    assert(result.GetNumerator().GetCoeff(0) == 6.0);
 
 }
 
+void testPolynomialAddition(){
+    Rational<Polynomial> poly1(Polynomial({1, 2, 3}));
+    Rational<Polynomial> poly2(Polynomial({3}));
+    Rational<Polynomial> result = poly1 + poly2;
 
-void testInterTypeAddition(){
-    Rational<double> result;
-
-    result = int1 + double1; // 1 + 1.0 -> 2.0
-    assert(result.GetValue() == 2.0);
-
-    result = int1 + double1point5; // 1 + 1.5 -> 2.5
-    assert(result.GetValue() == 2.5);
-
-    result = int2 + double2; // 2 + 2.0 -> 4.0
-    assert(result.GetValue() == 4.0)
-
-
-    
-}
-
-void testIntegerSubtraction() {
-    Rational<int> result;
-
-    result = int1 - int2; // 1 - 2 -> -1
-    assert(result.GetValue() == -1);
-
-    result = int3 - int4; // 3 - 4 -> -1
-    assert(result.GetValue() == -1);
-}
-
-void testDoubleSubtraction() {
-    Rational<double> result;
-
-    result = double1 - double2; // 1.0 - 2.0 -> -1.0
-    assert(result.GetValue() == -1.0);
-
-    result = double1 - double1point5; // 1.0 - 1.5 -> -0.5
-    assert(result.GetValue() == -0.5);
-}
-
-void testPolynomialSubtraction() {
-    Rational<Polynomial> result;
-
-    result = poly1 - poly2; // 0 - 1 -> {-1}
-    assert(result.GetValue().GetCoeff(0) == -1);
-
-    result = poly3 - poly4; // 3x - 7x -> {0, -4}
-    assert(result.GetValue().GetCoeff(0) == 0 && result.GetValue().GetCoeff(1) == -4);
-
-    result = poly5 - poly6; // 2 + 4x - 1 - 5x^2 -> {1, 4, -5}
-    assert(result.GetValue().GetCoeff(0) == 1 && result.GetValue().GetCoeff(1) == 4 && result.GetValue().GetCoeff(2) == -5);
-}
-
-void testInterTypeSubtraction(){
-    ;
+    assert(result.GetNumerator().GetCoeff(0) == 4.0);
+    assert(result.GetNumerator().GetCoeff(1) == 2.0);
+    assert(result.GetNumerator().GetCoeff(2) == 3.0);
 }
 
 
+void testIntegerSubtraction(){
+    Rational<Polynomial> int1(Polynomial({1}));
+    Rational<Polynomial> int2(Polynomial({3}));
+    Rational<Polynomial> result = int1 - int2;
 
-
-
-void testIntegerMultiplication() {
-    Rational<int> result;
-
-    result = int1 * int2; // 1 * 2 -> 2
-    assert(result.GetValue() == 2);
-
-    result = int3 * int4; // 3 * 4 -> 12
-    assert(result.GetValue() == 12);
+    assert(result.GetNumerator().GetCoeff(0) == -2);
 }
 
-void testDoubleMultiplication() {
-    Rational<double> result;
+void testDoubleSubtraction(){
+    Rational<Polynomial> double1(Polynomial({2.5}));
+    Rational<Polynomial> double2(Polynomial({3.5}));
+    Rational<Polynomial> result = double1 - double2;
 
-    result = double1 * double2; // 1.0 * 2.0 -> 2.0
-    assert(result.GetValue() == 2.0);
-
-    result = double1 * double1point5; // 1.0 * 1.5 -> 1.5
-    assert(result.GetValue() == 1.5);
+    assert(result.GetNumerator().GetCoeff(0) == -1.0);
 }
+
+void testPolynomialSubtraction(){
+    Rational<Polynomial> poly1(Polynomial({1, 2, 3}));
+    Rational<Polynomial> poly2(Polynomial({3}));
+    Rational<Polynomial> result = poly1 - poly2;
+
+    assert(result.GetNumerator().GetCoeff(0) == -2.0);
+    assert(result.GetNumerator().GetCoeff(1) == 2.0);
+    assert(result.GetNumerator().GetCoeff(2) == 3.0);
+}
+
+
+void testIntegerMultiplication(){
+    Rational<Polynomial> int1(Polynomial({1}));
+    Rational<Polynomial> int2(Polynomial({3}));
+    Rational<Polynomial> result = int1 * int2;
+
+    assert(result.GetNumerator().GetCoeff(0) == 3.0);
+}
+
+
+void testDoubleMultiplication(){
+    Rational<Polynomial> double1(Polynomial({2.5}));
+    Rational<Polynomial> double2(Polynomial({3.5}));
+    Rational<Polynomial> result = double1 * double2;
+
+    assert(result.GetNumerator().GetCoeff(0) == 8.75);
+}
+
 
 void testPolynomialMultiplication(){
+    Rational<Polynomial> poly1(Polynomial({1, 2, 3}));
+    Rational<Polynomial> poly2(Polynomial({3}));
+    Rational<Polynomial> result = poly1 * poly2;
+
+    assert(result.GetNumerator().GetCoeff(0) == 3.0);
+    assert(result.GetNumerator().GetCoeff(1) == 6.0);
+    assert(result.GetNumerator().GetCoeff(2) == 9.0);
+}
+
+void testIntegerDivision(){
+    Rational<Polynomial> poly1(Polynomial({1}));
+    Rational<Polynomial> poly2(Polynomial({3}));
+    Rational<Polynomial> result = poly1 / poly2;
+
+    assert(result.GetNumerator().GetCoeff(0) == 1);
+    assert(result.GetDenominator().GetCoeff(0) == 3);
+}
+
+void testDoubleDivision(){
+    Rational<Polynomial> poly1(Polynomial({2.5}));
+    Rational<Polynomial> poly2(Polynomial({3.5}));
+    Rational<Polynomial> result = poly1 / poly2;
+
+    assert(result.GetNumerator().GetCoeff(0) == 2.5);
+    assert(result.GetDenominator().GetCoeff(0) == 3.5);
+}
+
+void testPolynomialDivision(){
+    Rational<Polynomial> poly1(Polynomial({1, 2, 3}));
+    Rational<Polynomial> poly2(Polynomial({3}));
+    Rational<Polynomial> result = poly1 / poly2;
+
+    assert(result.GetNumerator().GetCoeff(0) == 1.0);
+    assert(result.GetNumerator().GetCoeff(1) == 2.0);
+    assert(result.GetNumerator().GetCoeff(2) == 3.0);
+    assert(result.GetDenominator().GetCoeff(0) == 3.0);
+}
+
+
+void testIntegerRemainder(){
     ;
 }
 
-void testInterTypeMultiplication(){
-    ;
-}
-
-void testIntegerDivision() {
-    Rational<int> result;
-
-    result = int1 / int2; // 1 / 2 -> 0
-    assert(result.GetValue() == 0);
-
-    result = int3 / int4; // 3 / 4 -> 0
-    assert(result.GetValue() == 0);
-}
-
-void testDoubleDivision() {
-    Rational<double> result;
-
-    result = double1 / double2; // 1.0 / 2.0 -> 0.5
-    assert(result.GetValue() == 0.5);
-
-    result = double1 / double1point5; // 1.0 / 1.5 -> 0.6666666666666666
-    assert(result.GetValue() == 0.6666666666666666);
-}
-
-void testPolynomialDivision() {
-    ;
-}
-
-void testInterTypeDivision(){
-    ;
-}
-
-
-
-
-void testIntegerRemainder() {
-    Rational<int> remainder;
-
-    remainder = int1 % int2; // 1 % 2 -> 1
-    assert(remainder.GetValue() == 1);
-
-    remainder = int3 % int4; // 3 % 4 -> 3
-    assert(remainder.GetValue() == 3);
-}
-
-void testPolynomialRemainder() {
+void testPolynomialRemainder(){
     ;
 }
 
 
-void testInterTypeRemainder(){
+void moreTesting(){
     ;
 }
 
 
 
+#include <iostream>
+#include <vector>
+#include "Polynomial.h"
+#include "ComplexPoly.h"
+
+void testPolynomialOperations() {
+    std::cout << "Testing Polynomial Operations..." << std::endl;
+
+    Polynomial poly1({1, 2, 3}); // Represents 1 + 2x + 3x^2
+    Polynomial poly2({3, 4});    // Represents 3 + 4x
+
+    // Addition
+    Polynomial polyAdd = poly1 + poly2;
+    std::cout << "poly1 + poly2 = ";
+    for (double coeff : polyAdd.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Subtraction
+    Polynomial polySub = poly1 - poly2;
+    std::cout << "poly1 - poly2 = ";
+    for (double coeff : polySub.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Multiplication
+    Polynomial polyMul = poly1 * poly2;
+    std::cout << "poly1 * poly2 = ";
+    for (double coeff : polyMul.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Division (assuming Polynomial division is implemented)
+    Polynomial polyDiv = poly1 / poly2;
+    std::cout << "poly1 / poly2 = ";
+    for (double coeff : polyDiv.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Polynomial Operations Test Completed!" << std::endl;
+}
+
+void testComplexPolyInitialization() {
+    std::cout << "\nTesting ComplexPoly Initialization..." << std::endl;
+
+    ComplexPoly cp1; // Default initialization
+    std::cout << "cp1: ";
+    for (double coeff : cp1.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    std::vector<double> polyPart = {1, 0, 2};       // Represents 1 + 2x^2
+    std::vector<double> complexPart = {0.5, -0.5};  // Complex roots at 0.5 and -0.5
+    ComplexPoly cp2(polyPart, complexPart);
+    std::cout << "cp2: ";
+    for (double coeff : cp2.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Complex parts: ";
+    for (double coeff : cp2.getComplexPolyCoeffLocations()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "ComplexPoly Initialization Test Completed!" << std::endl;
+}
+
+void testComplexPolyOperations() {
+    std::cout << "\nTesting ComplexPoly Operations..." << std::endl;
+
+    ComplexPoly cp1({1, 2, 3}, {0.5, -0.5});
+    ComplexPoly cp2({3, 4}, {1.0});
+
+    // Addition
+    ComplexPoly cpAdd = cp1 + cp2;
+    std::cout << "cp1 + cp2 = ";
+    for (double coeff : cpAdd.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Subtraction
+    ComplexPoly cpSub = cp1 - cp2;
+    std::cout << "cp1 - cp2 = ";
+    for (double coeff : cpSub.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Multiplication
+    ComplexPoly cpMul = cp1 * cp2;
+    std::cout << "cp1 * cp2 = ";
+    for (double coeff : cpMul.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Division (assuming ComplexPoly division is implemented)
+    ComplexPoly cpDiv = cp1 / cp2;
+    std::cout << "cp1 / cp2 = ";
+    for (double coeff : cpDiv.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "ComplexPoly Operations Test Completed!" << std::endl;
+}
+
+void testMixedOperations() {
+    std::cout << "\nTesting Mixed Polynomial and ComplexPoly Operations..." << std::endl;
+
+    Polynomial poly({1, -1}); // Represents 1 - x
+    ComplexPoly cp({2, 3}, {0.2, -0.2});
+
+    // Addition
+    ComplexPoly mixedAdd = cp + poly;
+    std::cout << "cp + poly = ";
+    for (double coeff : mixedAdd.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Subtraction
+    ComplexPoly mixedSub = poly - cp;
+    std::cout << "poly - cp = ";
+    for (double coeff : mixedSub.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Multiplication
+    ComplexPoly mixedMul = cp * poly;
+    std::cout << "cp * poly = ";
+    for (double coeff : mixedMul.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    // Division
+    ComplexPoly mixedDiv = poly / cp;
+    std::cout << "poly / cp = ";
+    for (double coeff : mixedDiv.getListCoeffsIn()) {
+        std::cout << coeff << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Mixed Operations Test Completed!" << std::endl;
+}
 
 
-
-
-
-
-
-// void testPolynomialSubtraction() {
-//     Polynomial result;
-
-//     result = poly1 - poly2; // 0 - 1 -> {-1}
-//     assert(result.GetCoeff(0) == -1);
-
-//     result = poly3 - poly4; // 3x - 7x -> {0, -4}
-//     assert(result.GetCoeff(0) == 0 && result.GetCoeff(1) == -4);
-
-//     result = poly5 - poly6; // 2 + 4x - 1 - 5x^2 -> {1, 4, -5}
-
-//     assert(result.GetCoeff(0) == 1 && result.GetCoeff(1) == 4 && result.GetCoeff(2) == -5);
-
-//     std::cout << "Passed Subtraction" << std::endl;
-// }
-
-
-// void testPolynomialMultiplication() {
-//     Polynomial result;
-
-//     result = poly2 * poly3; // 1 * 3x -> {0, 3}
-//     assert(result.GetCoeff(0) == 0 && result.GetCoeff(1) == 3);
-
-//     // testing to just scale via multiplication (works good)
-//     Polynomial poly1000({5});
-//     result = poly1000 * poly5 ; // 5 * (2 + 4x) -> {10, 20}
-//     assert(result.GetCoeff(0) == 10 && result.GetCoeff(1) == 20);
-//     Polynomial poly1001({7});
-//     result = poly1000 * poly1001; // 5 * 7 -> {35}
-//     assert(result.GetCoeff(0) == 35);
-
-
-
-
-
-//     result = poly4 * poly5; // 7x * (2 + 4x) -> {0, 14, 28}
-//     assert(result.GetCoeff(0) == 0 && result.GetCoeff(1) == 14 && result.GetCoeff(2) == 28);
-
-//     result = poly6 * poly7; // (1 + 5x^2) * (3 + 2x^2) -> {3, 0, 17, 0, 10}
-//     assert(result.GetCoeff(0) == 3 && result.GetCoeff(1) == 0 && result.GetCoeff(2) == 17 && result.GetCoeff(3) == 0 && result.GetCoeff(4) == 10);
-
-//     result = poly8 * poly9; // (1 + 2x + 3x^2) * (4 + 5x + 6x^2) -> {4, 13, 28, 27, 18}
-//     assert(result.GetCoeff(0) == 4 && result.GetCoeff(1) == 13 && result.GetCoeff(2) == 28 && result.GetCoeff(3) == 27 && result.GetCoeff(4) == 18);
-
-//     std::cout << "Passed Multiplication" << std::endl;
-// }
-
-// void testPolynomialDivision() {
-//     Polynomial result;
-
-//     result = poly10 / poly2; // (12 + 32x + 4x^2) / 1 -> {12, 32, 4}
-//     assert(result.GetCoeff(0) == 12 && result.GetCoeff(1) == 32 && result.GetCoeff(2) == 4);
-    
-//     result = poly12 / poly3; // (5 + 6x + 3x^3) / 3x -> {2, 0, 1}
-//     assert(result.GetCoeff(0) == 2 && result.GetCoeff(1) == 0  && result.GetCoeff(2) == 1);
-
-//     std::cout << "Passed Division" << std::endl;
-// }
-
-
-// void testPolynomialRemainder() {
-//     Polynomial remainder;
-
-//     remainder = poly10 % poly2; // (12 + 32x + 4x^2) % 1 -> {0}
-//     assert(remainder.GetDegree() == 0 && remainder.GetCoeff(0) == 0);
-
-//     remainder = poly12 % poly3; // (5 + 6x + 3x^3) % 3x -> {5}
-//     assert(remainder.GetDegree() == 0 && remainder.GetCoeff(0) == 5);
-
-//     remainder = poly13 % poly7; // (1 + 2x + 3x^2 + 5x^4) % (3 + 2x^2) -> {7.75, 2}
-//     assert(remainder.GetDegree() == 1 && remainder.GetCoeff(0) == 7.75 && remainder.GetCoeff(1) == 2);
-
-//     std::cout << "Passed Remainder" << std::endl;
-// }
-
-// void testRational() {
-//     Rational<int> r1(5);    
-//     Rational<int> r2(2);    
-//     Rational<int> r3;       
-
-//     r3 = r1 + r2; // 5 + 2 -> 7
-//     assert(r3.GetValue() == 7);
-
-//     Rational<Polynomial> r4(poly13);
-//     Rational<Polynomial> r5(poly7);
-//     Rational<Polynomial> r6;
-//     r6 = r4 % r5; // (1 + 5x^2) + (3 + 2x^2) -> 4 + 7x^2
-//     assert(r6.GetValue().GetCoeff(0) == 7.75 && r6.GetValue().GetCoeff(1) == 2);
-
-//     Rational<double> r7(5.0);
-//     Rational<double> r8;
-//     r8 = r7 / r2;
-//     std::cout << r8.GetValue() << std::endl;
-
-//     Rational<Polynomial> r9(poly6);
-//     Rational<int> r10(2);
-
-//     Rational<Polynomial> r11;
-
-//     // r11 = r9 * r10; // 3x + 2 -> 2 + 3x
-
-//     // std::cout << r11.GetValue().GetCoeff(0) << " " << r11.GetValue().GetCoeff(1) << r11.GetValue().GetCoeff(2) << std::endl;
-
-
-//     Rational<Polynomial> r12(poly12); // 5 + 6x + 0x^2 + 3x^3
-//     Rational<int> r13(3); // 3
-//     Rational<Polynomial> result;
-//     result = r12 * r13; // 15 + 18x + 0x^2 + 9x^3
-
-//     std::cout << result.GetValue().GetCoeff(0) << " " << result.GetValue().GetCoeff(1) << " " << result.GetValue().GetCoeff(2) << " " << result.GetValue().GetCoeff(3) << std::endl;
-
-
-// }
 
 
 int main() {
@@ -312,7 +305,6 @@ int main() {
     testIntegerAddition();
     testDoubleAddition();
     testPolynomialAddition();
-    testInterTypeAddition();
 
     std::cout << "Addition passed" << std::endl;
     
@@ -320,30 +312,34 @@ int main() {
     testIntegerSubtraction();
     testDoubleSubtraction();
     testPolynomialSubtraction();
-    testInterTypeSubtraction();
 
     std::cout << "Subtraction passed" << std::endl;
 
     testIntegerMultiplication();
     testDoubleMultiplication();
     testPolynomialMultiplication();
-    testInterTypeMultiplication();
 
     std::cout << "Multiplication passed" << std::endl;
 
     testIntegerDivision();
     testDoubleDivision();
     testPolynomialDivision();
-    testInterTypeDivision();
 
     std::cout << "Division passed" << std::endl;
 
     testIntegerRemainder();
     testPolynomialRemainder();
-    testInterTypeRemainder();
 
     std::cout << "Remainder passed" << std::endl;
 
+    moreTesting();
+
+
+
+    testPolynomialOperations();
+    testComplexPolyInitialization();
+    testComplexPolyOperations();
+    testMixedOperations();
 
 
      std::cout << "All tests passed" << std::endl;

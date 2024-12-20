@@ -12,7 +12,7 @@ using namespace std;
 
 // Polynomial ::  Polynomial(const Polynomial &rhs){}
 
-Polynomial::Polynomial(double coeff) : listCoeffsIn({coeff}) {}
+// Polynomial::Polynomial(double coeff) : listCoeffsIn({coeff}) {}
 
 // get coeff function
 double Polynomial::GetCoeff(int index) const
@@ -251,6 +251,48 @@ void Polynomial ::Dump() const
     cout << endl;
 }
 
+    Polynomial operator+(double lhs, const Polynomial& rhs) {
+    Polynomial lhsPoly(lhs);
+    return lhsPoly + rhs;
+    }
+
+    Polynomial operator+(int lhs, const Polynomial& rhs) {
+    Polynomial lhsPoly(lhs);
+    return lhsPoly + rhs;
+    }
+
+    Polynomial operator-(double lhs, const Polynomial& rhs) {
+    
+    Polynomial lhsPoly(lhs); 
+    return lhsPoly - rhs;    
+    
+    }
+
+    Polynomial operator-(int lhs, const Polynomial& rhs) {
+
+    Polynomial lhsPoly(lhs); 
+    return lhsPoly - rhs;    
+    }
+
+    Polynomial operator*(double lhs, const Polynomial& rhs) {
+    Polynomial lhsPoly(lhs);
+    return lhsPoly * rhs;
+    }
+
+    Polynomial operator*(int lhs, const Polynomial& rhs) {
+    Polynomial lhsPoly(lhs);
+    return lhsPoly * rhs;
+    }
+
+    Polynomial operator/(double lhs, const Polynomial& rhs) {
+    Polynomial lhsPoly(lhs);
+    return lhsPoly / rhs;
+    }
+
+    Polynomial operator/(int lhs, const Polynomial& rhs) {
+    Polynomial lhsPoly(lhs);
+    return lhsPoly / rhs;
+    }
 
 
 

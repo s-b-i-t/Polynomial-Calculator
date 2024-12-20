@@ -16,7 +16,9 @@
             
         Polynomial() : listCoeffsIn({0}) {}
 
-        Polynomial(double coeff);
+        Polynomial(int coeff) : listCoeffsIn({static_cast<double>(coeff)}) {}
+
+        Polynomial(double coeff) : listCoeffsIn({coeff}) {}
 
         Polynomial(const std::vector<double> &InputVec) : listCoeffsIn(InputVec)
     {
@@ -78,13 +80,35 @@
 
         void SetCoeffAt(int index,double value);
 
+        const std::vector<double>& getListCoeffsIn() const {return listCoeffsIn;}    
+
+
+        // umm gotta figure out how to handle complex still
+
+        // std::vector<double> getComplexCoeffLocations() const {return complexCoeffLocations;}\
+        // void setComplexCoeffLocations(std::vector<double> complexCoeffLocationsIn) {complexCoeffLocations = complexCoeffLocationsIn;}
+
     private:
 
         std::vector<double> listCoeffsIn;
+        // location and value of complex coefficients
+        // std::vector<double> complexCoeffLocations;
 
         mutable std::vector<double> remainder;
 
         
     };
+
+
+    // turn num * poly to poly * num
+    Polynomial operator+(double lhs, const Polynomial& rhs);
+    Polynomial operator+(int lhs, const Polynomial& rhs);        
+    Polynomial operator-(double lhs, const Polynomial& rhs);
+    Polynomial operator-(int lhs, const Polynomial& rhs);
+    Polynomial operator*(double lhs, const Polynomial& rhs);
+    Polynomial operator*(int lhs, const Polynomial& rhs);
+    Polynomial operator/(double lhs, const Polynomial& rhs);
+    Polynomial operator/(int lhs, const Polynomial& rhs);
+
 
     #endif 

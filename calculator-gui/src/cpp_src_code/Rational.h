@@ -42,9 +42,5 @@ private:
     T denominator;
 };
 
-    // modulo only supported for int and polynomial so outside class definition
-    Rational<int> operator%(const Rational<int> &lhs, const Rational<int> &rhs);
-
-    Rational<Polynomial> operator%(const Rational<Polynomial> &lhs, const Rational<Polynomial> &rhs);
 
 #endif /* Rational_h */
