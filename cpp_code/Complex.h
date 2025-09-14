@@ -8,7 +8,9 @@ class ComplexPoly
     public:
     
     ComplexPoly() : listCoeffsIn({0}) {}
-    ComplexPoly(const ComplexPoly &object) : listCoeffsIn(object.listCoeffsIn), ComplexPolyCoeffLocations(object.ComplexPolyCoeffLocations) {}
+    ComplexPoly(const ComplexPoly &cp) : listCoeffsIn(cp.listCoeffsIn), ComplexPolyCoeffLocations(cp.ComplexPolyCoeffLocations) {}
+
+    explicit ComplexPoly(const Polynomial &poly) : listCoeffsIn(poly.getListCoeffsIn()),  ComplexPolyCoeffLocations({}) {}
 
 
     ComplexPoly(const std::vector<double>& Polypart, const std::vector<double>& ComplexPart) : listCoeffsIn(Polypart), ComplexPolyCoeffLocations(ComplexPart) 
@@ -25,16 +27,16 @@ class ComplexPoly
 
     }
 
-    ComplexPoly operator+(const Polynomial &rhs);
-    ComplexPoly operator-(const Polynomial &rhs);
-    ComplexPoly operator*(const Polynomial &rhs);
-    ComplexPoly operator/(const Polynomial &rhs);
+    ComplexPoly operator+(const Polynomial &rhs) const;
+    ComplexPoly operator-(const Polynomial &rhs) const;
+    ComplexPoly operator*(const Polynomial &rhs) const;
+    ComplexPoly operator/(const Polynomial &rhs) const;
 
 
-    ComplexPoly operator+(const ComplexPoly &rhs);
-    ComplexPoly operator-(const ComplexPoly &rhs);
-    ComplexPoly operator*(const ComplexPoly &rhs);
-    ComplexPoly operator/(const ComplexPoly &rhs);
+    ComplexPoly operator+(const ComplexPoly &rhs) const;
+    ComplexPoly operator-(const ComplexPoly &rhs) const;
+    ComplexPoly operator*(const ComplexPoly &rhs) const;
+    ComplexPoly operator/(const ComplexPoly &rhs) const;
 
 
     const std::vector<double>& getListCoeffsIn() const {return listCoeffsIn;}
@@ -43,31 +45,19 @@ class ComplexPoly
     std::vector<double> listCoeffsIn;
     std::vector<double> ComplexPolyCoeffLocations;
 
-
     // todo: trim trailing zeros
-
-
-
-
-
-
-
 
 
 };
 
-
-    ComplexPoly operator+(const Polynomial &lhs,  ComplexPoly &rhs){
-        return rhs + lhs;
-    }
-
-    ComplexPoly operator-(const Polynomial &lhs,  ComplexPoly &rhs){
-        Polynomial tmpPoly = Polynomial(rhs.getListCoeffsIn());
-
-        Polynomial res = lhs - tmpPoly;
-        return ComplexPoly(res.getListCoeffsIn(), rhs.getComplexPolyCoeffLocations());
+inline ComplexPoly operator+(const Polynomial &lhs, const ComplexPoly &rhs) { return rhs + lhs; }
+inline ComplexPoly operator-(const Polynomial &lhs, const ComplexPoly &rhs) { return ComplexPoly(lhs) - rhs; }
+inline ComplexPoly operator*(const Polynomial &lhs, const ComplexPoly &rhs) { return rhs * lhs; }
+inline ComplexPoly operator/(const Polynomial &lhs, const ComplexPoly &rhs) { 
+    ComplexPoly lhs_cp(lhs);
+    return lhs_cp / rhs;
+}
 
 
-    } 
 
 #endif

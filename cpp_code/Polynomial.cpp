@@ -33,35 +33,25 @@ double Polynomial::GetCoeff(int index) const
     return coeff;
 }
 
-void Polynomial ::SetCoeffAt(int index, double value)
-{
-
-    if (index > listCoeffsIn.size()){
-        listCoeffsIn.resize(index + 1, 0);
-    }
-
-    if (index >= 0 && index >= listCoeffsIn.size())
+void Polynomial::SetCoeffAt(int index, double value) {
+    if (index < 0) return;
+    
+    if (index >= (int)listCoeffsIn.size()) 
     {
-       
-     this->listCoeffsIn[index] = value;      
+        listCoeffsIn.resize(index + 1, 0.0);
     }
+    listCoeffsIn[index] = value;
 }
 
 // degree function
 int Polynomial ::GetDegree() const
 {
-    if (listCoeffsIn.size() == 0)
-    {
-        return 0;
-    }
-    
-    int degree = listCoeffsIn.size() - 1;
-    while ((abs(listCoeffsIn[degree]) < 1e-10 || listCoeffsIn[degree] == 0) && !listCoeffsIn.empty())
-    {
-        degree--;
-    }
+int degree = (int)listCoeffsIn.size() - 1;
+while (degree >= 0 && std::abs(listCoeffsIn[degree]) < 1e-10) {
+    --degree;
+}
+return std::max(degree, 0);
 
-    return degree;
 }
 
 // scale function

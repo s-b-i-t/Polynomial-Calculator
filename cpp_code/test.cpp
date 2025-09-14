@@ -142,11 +142,6 @@ void moreTesting(){
 
 
 
-#include <iostream>
-#include <vector>
-#include "Polynomial.h"
-#include "ComplexPoly.h"
-
 void testPolynomialOperations() {
     std::cout << "Testing Polynomial Operations..." << std::endl;
 
