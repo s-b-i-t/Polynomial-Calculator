@@ -7,25 +7,52 @@ class ComplexPoly
 {
     public:
     
-    ComplexPoly() : listCoeffsIn({0}) {}
-    ComplexPoly(const ComplexPoly &cp) : listCoeffsIn(cp.listCoeffsIn), ComplexPolyCoeffLocations(cp.ComplexPolyCoeffLocations) {}
+    ComplexPoly() 
+    : listCoeffsIn({0}) {}
 
-    explicit ComplexPoly(const Polynomial &poly) : listCoeffsIn(poly.getListCoeffsIn()),  ComplexPolyCoeffLocations({}) {}
+    
+
+    ComplexPoly(const ComplexPoly &cp) 
+    : listCoeffsIn(cp.listCoeffsIn), complexCoeffs(cp.complexCoeffs) {}
+
+    explicit ComplexPoly(const Polynomial &poly)
+    : listCoeffsIn(poly.getListCoeffsIn()),  complexCoeffs({}) {}
 
 
-    ComplexPoly(const std::vector<double>& Polypart, const std::vector<double>& ComplexPart) : listCoeffsIn(Polypart), ComplexPolyCoeffLocations(ComplexPart) 
+    ComplexPoly(const std::vector<double>& Polypart, const std::vector<double>& ComplexPart) 
+    : listCoeffsIn(Polypart), complexCoeffs(ComplexPart) 
     {
         while (listCoeffsIn.size() > 0 && std::abs(listCoeffsIn.back()) < 1e-10)
         {
             listCoeffsIn.pop_back();
         }
 
-        while (ComplexPolyCoeffLocations.size() > 0 && std::abs(ComplexPolyCoeffLocations.back()) < 1e-10)
+        while (complexCoeffs.size() > 0 && std::abs(complexCoeffs.back()) < 1e-10)
         {
-            ComplexPolyCoeffLocations.pop_back();
+            complexCoeffs.pop_back();
+        }
+
+        if(listCoeffsIn.empty()){
+            listCoeffsIn = {0};
         }
 
     }
+    ComplexPoly(const std::initializer_list<double>& Polypart) 
+    : listCoeffsIn(Polypart), complexCoeffs({}) 
+    {
+        while (listCoeffsIn.size() > 0 && std::abs(listCoeffsIn.back()) < 1e-10)
+        {
+            listCoeffsIn.pop_back();
+        }
+
+        while (complexCoeffs.size() > 0 && std::abs(complexCoeffs.back()) < 1e-10)
+        {
+            complexCoeffs.pop_back();
+        }
+
+    }
+
+
 
     ComplexPoly operator+(const Polynomial &rhs) const;
     ComplexPoly operator-(const Polynomial &rhs) const;
@@ -40,12 +67,25 @@ class ComplexPoly
 
 
     const std::vector<double>& getListCoeffsIn() const {return listCoeffsIn;}
-    const std::vector<double>& getComplexPolyCoeffLocations() const {return ComplexPolyCoeffLocations;}
+    const std::vector<double>& getcomplexCoeffsList() const {return complexCoeffs;}
+    void Dump() const;
+    double GetCoeff(int index) const;
+    double getComplexCoeff(int index) const;
+
+    static ComplexPoly Undefined();
+    bool isUndefined() const;
+
+
+
     private:
     std::vector<double> listCoeffsIn;
-    std::vector<double> ComplexPolyCoeffLocations;
+    std::vector<double> complexCoeffs;
+
+
 
     // todo: trim trailing zeros
+
+    
 
 
 };

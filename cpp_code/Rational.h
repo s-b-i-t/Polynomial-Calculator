@@ -5,6 +5,8 @@
 #ifndef Rational_h
 #define Rational_h
 #include "Polynomial.h"
+#include "Complex.h"
+
 
 template <class T>
 class Rational
@@ -28,6 +30,7 @@ public:
     Rational<T> operator*(const Rational &rhs); 
 
     Rational<T> operator/(const Rational &rhs);     
+
     
 
 

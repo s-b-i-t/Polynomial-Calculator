@@ -3,13 +3,14 @@
 
 #include "Rational.h"
 #include "Polynomial.h"
+#include "Complex.h"
 #include <iostream>
 #include <complex>
 
 using std::complex;
 
 template class Rational<Polynomial>;
-template class Rational<complex<double>>;
+template class Rational<ComplexPoly>;
 // template class 
 
 
