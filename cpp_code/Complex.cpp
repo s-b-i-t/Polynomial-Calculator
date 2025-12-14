@@ -205,7 +205,6 @@ ComplexPoly ComplexPoly::operator/ (const Polynomial &rhs) const{
 }
 
 
-
 void ComplexPoly::Dump() const
 {
     int maxDegree = std::max(listCoeffsIn.size(), complexCoeffs.size());
@@ -218,13 +217,12 @@ void ComplexPoly::Dump() const
 
         // Skip if both real and imag are 0
         if (std::abs(realPart) < 1e-10 && std::abs(imagPart) < 1e-10)
-            std::cout << "0";
+            continue;
 
         if (!firstTerm)
             std::cout << " + ";
         firstTerm = false;
 
-        // Always wrap the coefficient in parentheses
         std::cout << "(";
         bool printedSomething = false;
 
@@ -244,7 +242,7 @@ void ComplexPoly::Dump() const
             std::cout << "x^" << i;
     }
 
-    if (firstTerm) { // nothing printed (all zero)
+    if (firstTerm) { // all zero
         std::cout << "0";
     }
 

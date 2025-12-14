@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -std=c++17 -g
 TARGET = ec
-SOURCES = Polynomial.cpp Rational.cpp test.cpp Complex.cpp
+SOURCES = Polynomial.cpp RationalComplex.cpp test.cpp Complex.cpp
 
 all: $(TARGET)
 
