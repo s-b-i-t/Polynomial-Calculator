@@ -1,3 +1,4 @@
+// More deprecated test cases
 // void testIntegerAddition() {
 //     Rational<int> result; 
     
