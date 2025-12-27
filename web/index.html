@@ -6,8 +6,61 @@
     <title>Polynomial & Complex Number Calculator</title>
 </head>
 <body>
-    <textarea id="output"></textarea> 
-        <script type="module" src="poly_wasm.js"></script>   
+    <textarea id="output"></textarea>
+    <section id="calculator_inputs">
+        <div>
+            <button>(</button>
+            <button>)</button>
+            <button>x**y</button>            
+            <button>x**2</button>            
+        </div>
+        <div>
+            <button>sqrtx</button>
+            <button>x^(1/y)</button>
+            <button>e</button>
+            <button>pi</button>            
+        </div>
+        <div>
+            <button>i</button>
+            <button>C</button>
+            <button>AC</button>
+            <button class="operator">divide</button>
+        </div>
+        <div>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button class="operator">multiply</button>
+        </div>
+        
+        <div>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button class="operator">subtract</button>
+        </div>
+
+        <div>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button class="operator">add</button>
+        </div>
+
+
+        <div>
+            <button>X</button>            
+            <button>0</button>
+            <button>.</button>
+            <button class="operator">equals</button>
+        </div>
+
+
+
+    </section>
+
+
+    <script type="module" src="poly_wasm.js"></script>   
     <script type="module" src="index.js" ></script>
 </body>
 </html>

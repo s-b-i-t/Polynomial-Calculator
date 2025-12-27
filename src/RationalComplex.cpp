@@ -11,14 +11,17 @@ RationalComplex::RationalComplex()
     // already canonical
 }
 
-RationalComplex::RationalComplex(const ComplexPoly &num)
-    : numerator(num),
-      denominator(ComplexPoly(Polynomial(std::vector<double>{1.0}))) {
+RationalComplex::RationalComplex(const ComplexPoly &num): 
+    numerator(num),
+    denominator(ComplexPoly(Polynomial(std::vector<double>{1.0})))
+    {
     normalize();
 }
 
-RationalComplex::RationalComplex(const ComplexPoly &num, const ComplexPoly &den)
-    : numerator(num), denominator(den) {
+RationalComplex::RationalComplex(const ComplexPoly &num, const ComplexPoly &den) : 
+    numerator(num), 
+    denominator(den) 
+    {
     normalize();
 }
 

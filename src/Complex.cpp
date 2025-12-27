@@ -26,6 +26,7 @@ double ComplexPoly::GetCoeff(int index) const
 
 double ComplexPoly::getComplexCoeff(int index) const
 {
+    
     if (index < 0 || index >= complexCoeffs.size())
     {
         return 0;
