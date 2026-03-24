@@ -2,3 +2,6 @@ extra_polynomials
 .vscode/
 cpp_code/ec
 cpp_code/windows_params
+web/node_modules/
+web/dist/
+web/public/poly.wasm
