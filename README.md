@@ -17,7 +17,7 @@ means:
 ```text
 1 + 2x + 3x^2
 ```
-
+    
 ## Original C++ Polynomial Engine
 
 The C++ implementation remains the source engine for the project. The core model lives in:
