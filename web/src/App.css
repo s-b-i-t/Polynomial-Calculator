@@ -91,11 +91,34 @@ h1 {
   letter-spacing: 0;
 }
 
-.engine-note {
+.engine-status {
+  display: grid;
+  gap: 6px;
   max-width: 260px;
+  border: 1px solid #c9c1b5;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px 12px;
   color: #4a5965;
   font-size: 0.95rem;
   text-align: right;
+}
+
+.engine-status span {
+  font-weight: 800;
+}
+
+.engine-status.ready span {
+  color: #1f6b43;
+}
+
+.engine-status.loading span {
+  color: #7a4a24;
+}
+
+.engine-status.error span,
+.engine-status small {
+  color: #a63a24;
 }
 
 .calculator-grid {
@@ -274,7 +297,7 @@ output {
     display: grid;
   }
 
-  .engine-note {
+  .engine-status {
     max-width: none;
     text-align: left;
   }

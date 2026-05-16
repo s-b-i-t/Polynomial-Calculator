@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import { loadPolyWasmEngine, type PolyWasmEngine } from './wasm/polyWasm'
 
 type Polynomial = number[]
 
@@ -9,6 +10,7 @@ type RationalPolynomial = {
 }
 
 type BinaryOperation = '+' | '-' | '*' | '/'
+type WasmStatus = 'loading' | 'ready' | 'error'
 
 const EPSILON = 1e-10
 
@@ -236,9 +238,34 @@ export default function App() {
   const [pInput, setPInput] = useState('1, 2, 3')
   const [qInput, setQInput] = useState('4, -1')
   const [xInput, setXInput] = useState('2')
-  const [result, setResult] = useState('3x^2 + x + 5')
-  const [detail, setDetail] = useState('P + Q')
+  const [result, setResult] = useState('Select an operation.')
+  const [detail, setDetail] = useState('C++ WebAssembly engine')
   const [error, setError] = useState('')
+  const [wasmEngine, setWasmEngine] = useState<PolyWasmEngine | null>(null)
+  const [wasmStatus, setWasmStatus] = useState<WasmStatus>('loading')
+  const [wasmError, setWasmError] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+
+    loadPolyWasmEngine()
+      .then((engine) => {
+        if (cancelled) return
+        setWasmEngine(engine)
+        setWasmStatus('ready')
+        setWasmError('')
+      })
+      .catch((loadError: unknown) => {
+        if (cancelled) return
+        setWasmEngine(null)
+        setWasmStatus('error')
+        setWasmError(loadError instanceof Error ? loadError.message : String(loadError))
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const parsedPreview = useMemo(() => {
     try {
@@ -255,14 +282,38 @@ export default function App() {
     }
   }, [pInput, qInput])
 
+  function handleEngineResult(engineResult: string) {
+    setResult(engineResult)
+    if (engineResult.startsWith('Error:')) {
+      setError(engineResult)
+    } else {
+      setError('')
+    }
+  }
+
+  function runFallbackOperation(operation: BinaryOperation): string {
+    const p = parsePolynomial(pInput)
+    const q = parsePolynomial(qInput)
+    const rational = applyOperation(operation, p, q)
+    return formatRational(rational)
+  }
+
   function runOperation(operation: BinaryOperation) {
     try {
-      const p = parsePolynomial(pInput)
-      const q = parsePolynomial(qInput)
-      const rational = applyOperation(operation, p, q)
-      setResult(formatRational(rational))
-      setDetail(`P ${operation} Q`)
-      setError('')
+      if (wasmEngine) {
+        const operationMap = {
+          '+': wasmEngine.add,
+          '-': wasmEngine.subtract,
+          '*': wasmEngine.multiply,
+          '/': wasmEngine.divide,
+        }
+        handleEngineResult(operationMap[operation](pInput, qInput))
+        setDetail(`WASM: P ${operation} Q`)
+        return
+      }
+
+      handleEngineResult(runFallbackOperation(operation))
+      setDetail(`Fallback oracle: P ${operation} Q`)
     } catch (operationError) {
       setError(operationError instanceof Error ? operationError.message : String(operationError))
     }
@@ -270,12 +321,15 @@ export default function App() {
 
   function runRemainder() {
     try {
-      const p = parsePolynomial(pInput)
-      const q = parsePolynomial(qInput)
-      const { quotient, remainder } = dividePolynomials(p, q)
-      setResult(formatPolynomial(remainder))
-      setDetail(`Remainder after P / Q, quotient ${formatPolynomial(quotient)}`)
-      setError('')
+      if (wasmEngine) {
+        handleEngineResult(wasmEngine.remainder(pInput, qInput))
+        setDetail('WASM: remainder after P / Q')
+        return
+      }
+
+      const { quotient, remainder } = dividePolynomials(parsePolynomial(pInput), parsePolynomial(qInput))
+      handleEngineResult(formatPolynomial(remainder))
+      setDetail(`Fallback oracle: remainder after P / Q, quotient ${formatPolynomial(quotient)}`)
     } catch (operationError) {
       setError(operationError instanceof Error ? operationError.message : String(operationError))
     }
@@ -283,10 +337,14 @@ export default function App() {
 
   function runDerivative() {
     try {
-      const p = parsePolynomial(pInput)
-      setResult(formatPolynomial(derivative(p)))
-      setDetail('Derivative of P')
-      setError('')
+      if (wasmEngine) {
+        handleEngineResult(wasmEngine.derivative(pInput))
+        setDetail('WASM: derivative of P')
+        return
+      }
+
+      handleEngineResult(formatPolynomial(derivative(parsePolynomial(pInput))))
+      setDetail('Fallback oracle: derivative of P')
     } catch (operationError) {
       setError(operationError instanceof Error ? operationError.message : String(operationError))
     }
@@ -294,14 +352,19 @@ export default function App() {
 
   function runEvaluation() {
     try {
-      const p = parsePolynomial(pInput)
       const xValue = Number(xInput)
       if (!Number.isFinite(xValue)) {
         throw new Error('Enter a numeric value for a.')
       }
-      setResult(formatNumber(evaluate(p, xValue)))
-      setDetail(`P(${formatNumber(xValue)})`)
-      setError('')
+
+      if (wasmEngine) {
+        handleEngineResult(wasmEngine.evaluate(pInput, xValue))
+        setDetail(`WASM: P(${formatNumber(xValue)})`)
+        return
+      }
+
+      handleEngineResult(formatNumber(evaluate(parsePolynomial(pInput), xValue)))
+      setDetail(`Fallback oracle: P(${formatNumber(xValue)})`)
     } catch (operationError) {
       setError(operationError instanceof Error ? operationError.message : String(operationError))
     }
@@ -321,7 +384,10 @@ export default function App() {
             <p className="eyebrow">Rational polynomial engine</p>
             <h1 id="app-title">Polynomial Calculator</h1>
           </div>
-          <div className="engine-note">C++ source engine, TypeScript deployment mirror</div>
+          <div className={`engine-status ${wasmStatus}`}>
+            <span>WASM engine: {wasmStatus}</span>
+            {wasmStatus === 'error' ? <small>{wasmError}</small> : null}
+          </div>
         </header>
 
         <div className="calculator-grid">

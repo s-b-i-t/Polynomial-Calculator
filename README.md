@@ -1,10 +1,10 @@
 # Polynomial Calculator
 
-Portfolio-ready polynomial calculator built around an original C++ polynomial engine and a deployed Vite/React web interface.
+Portfolio-ready polynomial calculator built around an original C++ polynomial engine compiled to WebAssembly and used by a Vite/React web interface.
 
 ## Overview
 
-This project started as a C++ polynomial calculator and has been cleaned up for a focused web deployment. The deployed interface intentionally stays narrow: it accepts two real polynomials, `P(x)` and `Q(x)`, as coefficient lists and performs polynomial/rational polynomial operations.
+This project started as a C++ polynomial calculator and has been cleaned up for a focused web deployment. The deployed interface intentionally stays narrow: it accepts two real polynomials, `P(x)` and `Q(x)`, as coefficient lists and performs polynomial/rational polynomial operations through the compiled C++ WebAssembly engine.
 
 Example input:
 
@@ -59,7 +59,9 @@ This lets plain polynomial operations and rational polynomial operations share t
 
 The `web/` directory contains the portfolio web app. It uses Vite, React, and TypeScript.
 
-The deployed app currently runs polynomial/rational polynomial operations in TypeScript so the portfolio build is not blocked by a browser WASM bridge. The TypeScript implementation mirrors the real-polynomial subset of the C++ `RationalComplex` arithmetic and keeps the user flow independent of missing `poly.wasm` files.
+The deployed app loads `web/public/poly_wasm.js` and `web/public/poly_wasm.wasm`, then calls C-compatible functions exported from `src/wasm_api.cpp`. The TypeScript polynomial code in the UI is retained only as a visibly labeled fallback/test oracle if the WASM engine fails to load.
+
+The WASM wrapper accepts coefficient-list strings, builds `Polynomial` values, promotes them with `make_rational(...)`, and returns formatted result strings to the UI.
 
 ## Operations Supported
 
@@ -83,6 +85,12 @@ Build and run the C++ tests from the repository root:
 make clean
 make
 ./ec
+```
+
+Build the C++ WebAssembly engine:
+
+```bash
+./wasm/build_wasm.sh
 ```
 
 Run the web app locally:
@@ -110,4 +118,4 @@ Use these Cloudflare Pages settings:
 
 ## Future Work
 
-Complete the C++/WASM bridge so the deployed web app can call the original C++ `RationalComplex` engine directly. The current TypeScript implementation is a deployment-safe mirror for the real-polynomial interface, not a replacement for the source C++ model.
+Future improvements can simplify rational outputs, broaden test coverage around the WASM wrapper, and add a CI job that builds both the native C++ tests and the WebAssembly artifact before deployment.
