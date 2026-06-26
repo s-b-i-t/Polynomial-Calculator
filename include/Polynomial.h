@@ -22,9 +22,14 @@
 
         Polynomial(const std::vector<double> &InputVec) : listCoeffsIn(InputVec)
     {
-        while (listCoeffsIn.size() > 0 && std::abs(listCoeffsIn.back()) < 1e-10)
+        while (listCoeffsIn.size() > 1 && std::abs(listCoeffsIn.back()) < 1e-10)
         {
             listCoeffsIn.pop_back();
+        }
+
+        if (listCoeffsIn.empty())
+        {
+            listCoeffsIn.push_back(0.0);
         }
     }
         

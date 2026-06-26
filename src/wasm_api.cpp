@@ -1,5 +1,6 @@
 #include "Polynomial.h"
 #include "RationalComplex.h"
+#include "RootFinding.h"
 
 #include <algorithm>
 #include <cmath>
@@ -224,33 +225,6 @@ std::string run_binary(const char *p, const char *q, char operation) {
     return "Error: unknown operation.";
 }
 
-Polynomial derivative(const Polynomial &poly) {
-    std::vector<double> result;
-    const std::vector<double> &coefficients = poly.getListCoeffsIn();
-
-    if (coefficients.size() <= 1) {
-        return Polynomial(std::vector<double>{0.0});
-    }
-
-    result.reserve(coefficients.size() - 1);
-    for (std::size_t i = 1; i < coefficients.size(); ++i) {
-        result.push_back(coefficients[i] * static_cast<double>(i));
-    }
-
-    return Polynomial(result);
-}
-
-double evaluate(const Polynomial &poly, double x) {
-    const std::vector<double> &coefficients = poly.getListCoeffsIn();
-    double result = 0.0;
-
-    for (auto it = coefficients.rbegin(); it != coefficients.rend(); ++it) {
-        result = result * x + *it;
-    }
-
-    return result;
-}
-
 char *copy_result(const std::string &result) {
     char *buffer = static_cast<char *>(std::malloc(result.size() + 1));
     if (buffer == nullptr) {
@@ -291,31 +265,10 @@ char *poly_divide(const char *p, const char *q) {
     return catch_errors([&]() { return run_binary(p, q, '/'); });
 }
 
-char *poly_remainder(const char *p, const char *q) {
-    return catch_errors([&]() {
-        std::vector<double> q_coefficients = parse_coefficients(q);
-        if (is_zero(q_coefficients)) {
-            return std::string("Error: division by the zero polynomial is undefined.");
-        }
-
-        Polynomial left = parse_polynomial(p);
-        Polynomial right(q_coefficients);
-        Polynomial remainder = left % right;
-        return format_polynomial_coefficients(remainder.getListCoeffsIn());
-    });
-}
-
-char *poly_derivative(const char *p) {
+char *poly_roots(const char *p) {
     return catch_errors([&]() {
         Polynomial poly = parse_polynomial(p);
-        return format_polynomial_coefficients(derivative(poly).getListCoeffsIn());
-    });
-}
-
-char *poly_evaluate(const char *p, double x) {
-    return catch_errors([&]() {
-        Polynomial poly = parse_polynomial(p);
-        return format_number(evaluate(poly, x));
+        return find_real_roots(poly);
     });
 }
 

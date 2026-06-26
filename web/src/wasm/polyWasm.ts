@@ -12,9 +12,7 @@ export type PolyWasmEngine = {
   subtract: (p: string, q: string) => string
   multiply: (p: string, q: string) => string
   divide: (p: string, q: string) => string
-  remainder: (p: string, q: string) => string
-  derivative: (p: string) => string
-  evaluate: (p: string, x: number) => string
+  roots: (p: string) => string
 }
 
 declare global {
@@ -83,9 +81,7 @@ export function loadPolyWasmEngine(): Promise<PolyWasmEngine> {
       subtract: wrapStringResult<[string, string]>('poly_subtract', ['string', 'string']),
       multiply: wrapStringResult<[string, string]>('poly_multiply', ['string', 'string']),
       divide: wrapStringResult<[string, string]>('poly_divide', ['string', 'string']),
-      remainder: wrapStringResult<[string, string]>('poly_remainder', ['string', 'string']),
-      derivative: wrapStringResult<[string]>('poly_derivative', ['string']),
-      evaluate: wrapStringResult<[string, number]>('poly_evaluate', ['string', 'number']),
+      roots: wrapStringResult<[string]>('poly_roots', ['string']),
     }
   })
 

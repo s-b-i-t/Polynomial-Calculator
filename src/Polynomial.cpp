@@ -6,8 +6,19 @@
 #include <iterator>
 #include <string>
 #include <cstring>
+#include <stdexcept>
 
 using namespace std;
+namespace {
+constexpr double EPSILON = 1e-10;
+
+bool isZeroPolynomial(const vector<double> &coefficients)
+{
+    return all_of(coefficients.begin(), coefficients.end(), [](double value) {
+        return abs(value) < EPSILON;
+    });
+}
+}
 // Polynomial ::  Polynomial(const std::vector<double> &listCoeffsIn){}
 
 // Polynomial ::  Polynomial(const Polynomial &rhs){}
@@ -122,6 +133,11 @@ Polynomial Polynomial::operator/(const Polynomial &rhs) const
 {
     int dividendDegree = GetDegree();
     int divisorDegree = rhs.GetDegree();
+
+    if (isZeroPolynomial(rhs.listCoeffsIn))
+    {
+        throw invalid_argument("Division by the zero polynomial is undefined.");
+    }
 
     if (dividendDegree < divisorDegree)
     {

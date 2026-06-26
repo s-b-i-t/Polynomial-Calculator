@@ -1,10 +1,52 @@
 #include <iostream>
 #include <cassert>
+#include <stdexcept>
 #include <vector>
 #include "Polynomial.h"
 #include "Definitions.h"
 #include "RationalComplex.h"
 #include "Complex.h"
+#include "RootFinding.h"
+
+void testPolynomialSafety() {
+    Polynomial trimmedZero(std::vector<double>{0.0, 0.0, 0.0});
+    assert(trimmedZero.getListCoeffsIn().size() == 1);
+    assert(trimmedZero.GetCoeff(0) == 0.0);
+
+    Polynomial emptyInput(std::vector<double>{});
+    assert(emptyInput.getListCoeffsIn().size() == 1);
+    assert(emptyInput.GetCoeff(0) == 0.0);
+
+    bool threw = false;
+    try {
+        (void)(Polynomial(std::vector<double>{1.0}) / Polynomial(std::vector<double>{0.0}));
+    } catch (const std::invalid_argument &) {
+        threw = true;
+    }
+    assert(threw && "Polynomial division by zero did not throw");
+
+    threw = false;
+    try {
+        (void)(Polynomial(std::vector<double>{1.0}) % Polynomial(std::vector<double>{0.0}));
+    } catch (const std::invalid_argument &) {
+        threw = true;
+    }
+    assert(threw && "Polynomial remainder by zero did not throw");
+
+    std::cout << "Polynomial safety passed" << std::endl;
+}
+
+void testRealRoots() {
+    assert(find_real_roots(Polynomial(std::vector<double>{0.0})) == "Infinite roots");
+    assert(find_real_roots(Polynomial(std::vector<double>{5.0})) == "No roots");
+    assert(find_real_roots(Polynomial(std::vector<double>{4.0, 2.0})) == "-2");
+    assert(find_real_roots(Polynomial(std::vector<double>{-1.0, 0.0, 1.0})) == "-1, 1");
+    assert(find_real_roots(Polynomial(std::vector<double>{1.0, -2.0, 1.0})) == "1");
+    assert(find_real_roots(Polynomial(std::vector<double>{1.0, 0.0, 1.0})) == "No real roots");
+    assert(find_real_roots(Polynomial(std::vector<double>{1.0, 0.0, 0.0, 1.0})) == "Root finding supports only degree 1 and 2 polynomials.");
+
+    std::cout << "Real roots passed" << std::endl;
+}
 void testAddition() {
     /**********************
      Pure real polynomials (via make_rational)
@@ -252,6 +294,9 @@ void testDivision() {
 
 
 int main() {
+    testPolynomialSafety();
+
+    testRealRoots();
 
     testAddition();
 

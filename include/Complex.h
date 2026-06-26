@@ -22,7 +22,7 @@ class ComplexPoly
     ComplexPoly(const std::vector<double>& Polypart, const std::vector<double>& ComplexPart) 
     : listCoeffsIn(Polypart), complexCoeffs(ComplexPart) 
     {
-        while (listCoeffsIn.size() > 0 && std::abs(listCoeffsIn.back()) < 1e-10)
+        while (listCoeffsIn.size() > 1 && std::abs(listCoeffsIn.back()) < 1e-10)
         {
             listCoeffsIn.pop_back();
         }
@@ -32,7 +32,7 @@ class ComplexPoly
             complexCoeffs.pop_back();
         }
 
-        if(listCoeffsIn.empty()){
+        if (listCoeffsIn.empty()) {
             listCoeffsIn = {0};
         }
 
@@ -40,7 +40,7 @@ class ComplexPoly
     ComplexPoly(const std::initializer_list<double>& Polypart) 
     : listCoeffsIn(Polypart), complexCoeffs({}) 
     {
-        while (listCoeffsIn.size() > 0 && std::abs(listCoeffsIn.back()) < 1e-10)
+        while (listCoeffsIn.size() > 1 && std::abs(listCoeffsIn.back()) < 1e-10)
         {
             listCoeffsIn.pop_back();
         }
@@ -48,6 +48,10 @@ class ComplexPoly
         while (complexCoeffs.size() > 0 && std::abs(complexCoeffs.back()) < 1e-10)
         {
             complexCoeffs.pop_back();
+        }
+
+        if (listCoeffsIn.empty()) {
+            listCoeffsIn = {0};
         }
 
     }

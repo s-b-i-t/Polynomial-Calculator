@@ -24,6 +24,7 @@ em++ \
   -I"${REPO_ROOT}/include" \
   "${REPO_ROOT}/src/wasm_api.cpp" \
   "${REPO_ROOT}/src/Polynomial.cpp" \
+  "${REPO_ROOT}/src/RootFinding.cpp" \
   "${REPO_ROOT}/src/Complex.cpp" \
   "${REPO_ROOT}/src/RationalComplex.cpp" \
   -sMODULARIZE=1 \
@@ -31,7 +32,7 @@ em++ \
   -sALLOW_MEMORY_GROWTH=1 \
   -sNO_EXIT_RUNTIME=1 \
   -sENVIRONMENT=web,worker \
-  -sEXPORTED_FUNCTIONS='["_poly_add","_poly_subtract","_poly_multiply","_poly_divide","_poly_remainder","_poly_derivative","_poly_evaluate","_poly_free"]' \
+  -sEXPORTED_FUNCTIONS='["_poly_add","_poly_subtract","_poly_multiply","_poly_divide","_poly_roots","_poly_free"]' \
   -sEXPORTED_RUNTIME_METHODS='["cwrap","UTF8ToString"]' \
   -o "${REPO_ROOT}/web/public/poly_wasm.js"
 
