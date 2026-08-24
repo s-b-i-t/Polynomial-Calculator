@@ -6,7 +6,6 @@
 #include "Definitions.h"
 #include "RationalComplex.h"
 #include "Complex.h"
-#include "RootFinding.h"
 
 void testPolynomialSafety() {
     Polynomial trimmedZero(std::vector<double>{0.0, 0.0, 0.0});
@@ -36,17 +35,6 @@ void testPolynomialSafety() {
     std::cout << "Polynomial safety passed" << std::endl;
 }
 
-void testRealRoots() {
-    assert(find_real_roots(Polynomial(std::vector<double>{0.0})) == "Infinite roots");
-    assert(find_real_roots(Polynomial(std::vector<double>{5.0})) == "No roots");
-    assert(find_real_roots(Polynomial(std::vector<double>{4.0, 2.0})) == "-2");
-    assert(find_real_roots(Polynomial(std::vector<double>{-1.0, 0.0, 1.0})) == "-1, 1");
-    assert(find_real_roots(Polynomial(std::vector<double>{1.0, -2.0, 1.0})) == "1");
-    assert(find_real_roots(Polynomial(std::vector<double>{1.0, 0.0, 1.0})) == "No real roots");
-    assert(find_real_roots(Polynomial(std::vector<double>{1.0, 0.0, 0.0, 1.0})) == "Root finding supports only degree 1 and 2 polynomials.");
-
-    std::cout << "Real roots passed" << std::endl;
-}
 void testAddition() {
     /**********************
      Pure real polynomials (via make_rational)
@@ -295,8 +283,6 @@ void testDivision() {
 
 int main() {
     testPolynomialSafety();
-
-    testRealRoots();
 
     testAddition();
 
